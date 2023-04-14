@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">dnevnjak</string>
+    <string name="app_name">Dnevnjak</string>
+
+    <string name="buttonStyledTextViews">Styled TextViews</string>
+    <string name="buttonRotationAndViewModels">Rotation And ViewModels</string>
+    <string name="buttonRecyclerView">Recycler View</string>
+
+    <string name="textOne">One</string>
+    <string name="textTwo">Two</string>
+    <string name="textThree">Three</string>
+    <string name="textFour">Four</string>
+    <string name="textFive">Five</string>
+    <string name="buttonDatabase">Database</string>
+    <string name="add_user">Add User</string>
+    <string name="editTextEmail">Email</string>
+    <string name="editTextUsername">Username</string>
+    <string name="editTextPass">Password</string>
+    <string name="buttonRegister">Register</string>
+    <string name="buttonLogin">Login</string>
+    <string name="buttonBack">Back</string>
 </resources>

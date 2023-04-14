@@ -1,6 +1,7 @@
 package rs.raf.dnevnjak.app;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
 
 
 public class DnevnjakApp extends Application {
