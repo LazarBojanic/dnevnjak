@@ -6,20 +6,22 @@ import androidx.core.splashscreen.SplashScreen;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import rs.raf.dnevnjak.R;
+import rs.raf.dnevnjak.model.ServiceUser;
+import rs.raf.dnevnjak.util.JacksonSerializer;
 import rs.raf.dnevnjak.viewmodel.SplashViewModel;
 
 public class MainActivity extends AppCompatActivity {
-    private SplashViewModel splashViewModel;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initSplashScreen();
         setContentView(R.layout.activity_main);
         initView();
         initListeners();
@@ -35,20 +37,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-    public void initSplashScreen(){
-        splashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
-        // Handle the splash screen transition.
-        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
-        splashScreen.setKeepOnScreenCondition(() -> {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            return false;
-//            Boolean value = splashViewModel.isLoading().getValue();
-//            if (value == null) return false;
-//            return value;
-        });
-    }
+
 }
