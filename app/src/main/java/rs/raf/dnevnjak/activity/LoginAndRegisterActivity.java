@@ -1,20 +1,24 @@
 package rs.raf.dnevnjak.activity;
 
-import static rs.raf.dnevnjak.app.DnevnjakApp.DNEVNJAK_TAG;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import rs.raf.dnevnjak.R;
+import rs.raf.dnevnjak.app.DnevnjakApp;
 import rs.raf.dnevnjak.model.ServiceUser;
 import rs.raf.dnevnjak.util.DatabaseHelper;
+import rs.raf.dnevnjak.util.JacksonSerializer;
 
 public class LoginAndRegisterActivity extends AppCompatActivity {
 
@@ -43,6 +47,7 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
         buttonRegister = findViewById(R.id.buttonRegister);
         buttonBack = findViewById(R.id.buttonBack);
     }
+
     private void initListeners(){
         buttonLogin.setOnClickListener(v -> {
             try{
@@ -50,16 +55,18 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
 
                 DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
                 if(databaseHelper.loginUser(this, serviceUser)){
-                    Log.i(DNEVNJAK_TAG, "Login Successful");
+                    Log.i(getResources().getString(R.string.dnevnjakTag), "Login Successful");
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
                 }
                 else{
-                    Log.i(DNEVNJAK_TAG, "Login Failed");
+                    Log.i(getResources().getString(R.string.dnevnjakTag), "Login Failed");
                     Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
             }
             catch(Exception e){
-                Log.e("dnevnjak", e.getMessage());
+                Log.i(getResources().getString(R.string.dnevnjakTag), e.getMessage());
             }
         });
 
@@ -69,17 +76,17 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
 
                 DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
                 if(databaseHelper.registerUser(this, serviceUser)){
-                    Log.i(DNEVNJAK_TAG, "Registration Successful");
+                    Log.i(getResources().getString(R.string.dnevnjakTag), "Registration Successful");
                     Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Log.i(DNEVNJAK_TAG, "Registration Failed");
+                    Log.i(getResources().getString(R.string.dnevnjakTag), "Registration Failed");
                     Toast.makeText(this, "Registration Failed", Toast.LENGTH_SHORT).show();
                 }
 
             }
             catch(Exception e){
-                Log.e("dnevnjak", e.getMessage());
+                Log.i(getResources().getString(R.string.dnevnjakTag), e.getMessage());
             }
         });
 

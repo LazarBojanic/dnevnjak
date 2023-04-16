@@ -17,4 +17,10 @@
     <string name="buttonRegister">Register</string>
     <string name="buttonLogin">Login</string>
     <string name="buttonBack">Back</string>
+    <string name="itemCalendar">Calendar</string>
+    <string name="itemSchedule">Schedule</string>
+    <string name="itemAccount">Account</string>
+    <string name="dnevnjakTag">DNEVNJAK</string>
+    <string name="userSharedPreference">USER_SP</string>
+    <string name="dnevnjakSharedPreferences">DNEVNJAK_SP</string>
 </resources>

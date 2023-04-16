@@ -1,14 +1,21 @@
 package rs.raf.dnevnjak.activity;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.splashscreen.SplashScreen;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import rs.raf.dnevnjak.R;
 import rs.raf.dnevnjak.app.DnevnjakApp;
+import rs.raf.dnevnjak.model.ServiceUser;
+import rs.raf.dnevnjak.util.DatabaseHelper;
 import rs.raf.dnevnjak.util.Util;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -20,32 +27,38 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
     }
 
-    public void checkUserSharedPreference(){
-        SharedPreferences sharedPreferences = DnevnjakApp.sharedPreferences;
-        if(sharedPreferences != null){
-            if(sharedPreferences.contains("USER_SP")){
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            }
-            else{
-                Intent intent = new Intent(this, LoginAndRegisterActivity.class);
-                startActivity(intent);
-            }
-        }
-        else{
-            Intent intent = new Intent(this, LoginAndRegisterActivity.class);
-            startActivity(intent);
-        }
-    }
     public void initSplashScreen(){
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         splashScreen.setKeepOnScreenCondition(() -> {
             try {
                 Thread.sleep(1000);
-                Util.checkUserSharedPreference(this);
+                ServiceUser serviceUser = Util.checkUserSharedPreference(this);
+                if(serviceUser != null){
+                    Log.i(String.valueOf(R.string.dnevnjakTag), serviceUser.getUsername());
+                    DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
+                    if(databaseHelper.loginUser(this, serviceUser)){
+                        Log.i(getResources().getString(R.string.dnevnjakTag), "Login Successful");
+                        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Log.i(getResources().getString(R.string.dnevnjakTag), "Login Failed 1");
+                        Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(this, LoginAndRegisterActivity.class);
+                        startActivity(intent);
+                    }
+                }
+                else{
+                    Log.i(getResources().getString(R.string.dnevnjakTag), "Login Failed 2");
+                    Intent intent = new Intent(this, LoginAndRegisterActivity.class);
+                    startActivity(intent);
+                }
             }
-            catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            catch (InterruptedException | JsonProcessingException e) {
+                Log.i(getResources().getString(R.string.dnevnjakTag), "Login Failed 3");
+                Intent intent = new Intent(this, LoginAndRegisterActivity.class);
+                startActivity(intent);
             }
             return false;
         });

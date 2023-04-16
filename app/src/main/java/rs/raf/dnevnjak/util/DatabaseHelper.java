@@ -50,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return true;
     }
-    public boolean loginUser(Context context, ServiceUser serviceUser){
+    public boolean loginUser(Context context, ServiceUser serviceUser) throws JsonProcessingException {
         if(validateUserData(context, serviceUser)){
             SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
@@ -61,6 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String columnPass = resultSet.getString(Math.abs(resultSet.getColumnIndex("pass")));
                 if(columnPass != null){
                     if(Hasher.checkPassword(serviceUser.getPass(), columnPass)){
+                        Util.putUserSharedPreference(context, serviceUser);
                         return true;
                     }
                     else{
