@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyTheme"
         tools:targetApi="30">
         <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.SplashScreenActivity"
             android:exported="true"
             android:theme="@style/Theme.App.Starting">
@@ -24,12 +27,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            </activity>
+        </activity>
         <activity
             android:name=".activity.LoginAndRegisterActivity"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
+
 </manifest>

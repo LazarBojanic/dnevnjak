@@ -5,20 +5,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import rs.raf.dnevnjak.R;
-import rs.raf.dnevnjak.app.DnevnjakApp;
 import rs.raf.dnevnjak.model.ServiceUser;
 import rs.raf.dnevnjak.util.DatabaseHelper;
-import rs.raf.dnevnjak.util.JacksonSerializer;
 
 public class LoginAndRegisterActivity extends AppCompatActivity {
 
@@ -27,7 +22,7 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
     private EditText editTextPass;
     private Button buttonLogin;
     private Button buttonRegister;
-    private Button buttonBack;
+    private Button buttonExit;
 
 
     @Override
@@ -45,7 +40,7 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
         editTextPass = findViewById(R.id.editTextPass);
         buttonLogin = findViewById(R.id.buttonLogin);
         buttonRegister = findViewById(R.id.buttonRegister);
-        buttonBack = findViewById(R.id.buttonBack);
+        buttonExit = findViewById(R.id.buttonExit);
     }
 
     private void initListeners(){
@@ -88,6 +83,9 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
             catch(Exception e){
                 Log.i(getResources().getString(R.string.dnevnjakTag), e.getMessage());
             }
+        });
+        buttonExit.setOnClickListener(v -> {
+            finish();
         });
 
     }

@@ -1,5 +1,6 @@
 package rs.raf.dnevnjak.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import rs.raf.dnevnjak.R;
+import rs.raf.dnevnjak.activity.ChangePasswordActivity;
+import rs.raf.dnevnjak.activity.LoginAndRegisterActivity;
+import rs.raf.dnevnjak.model.ServiceUser;
+import rs.raf.dnevnjak.util.Util;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +32,11 @@ public class AccountFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private TextView textViewUsername;
+    private TextView textViewEmail;
+    private Button buttonChangePassword;
+    private Button buttonLogout;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -55,6 +67,40 @@ public class AccountFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+    private void initListeners(){
+        buttonChangePassword.setOnClickListener(v ->{
+            Intent intent = new Intent(requireActivity(), ChangePasswordActivity.class);
+            startActivity(intent);
+        });
+        buttonLogout.setOnClickListener(v ->{
+            if(Util.removeUserSharedPreference(requireActivity())){
+                Intent intent = new Intent(requireActivity(), LoginAndRegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+    public void initView(){
+        textViewUsername = requireActivity().findViewById(R.id.textViewUsername);
+        textViewEmail = requireActivity().findViewById(R.id.textViewEmail);
+
+        buttonChangePassword = requireActivity().findViewById(R.id.buttonChangePassword);
+        buttonLogout = requireActivity().findViewById(R.id.buttonLogout);
+    }
+    public void populateView(){
+        ServiceUser serviceUser = Util.getUserSharedPreference(requireActivity());
+        if(serviceUser != null){
+            textViewUsername.setText(serviceUser.getUsername());
+            textViewEmail.setText(serviceUser.getEmail());
+        }
+
+    }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView();
+        populateView();
+        initListeners();
     }
 
     @Override

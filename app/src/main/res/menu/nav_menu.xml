@@ -5,13 +5,13 @@
     <item
         android:id="@+id/itemCalendar"
         android:icon="@drawable/ic_calendar_simple"
-        android:title="@string/itemCalendar" />
+        android:title="@string/calendar" />
     <item
         android:id="@+id/itemSchedule"
         android:icon="@drawable/ic_schedule_simple"
-        android:title="@string/itemSchedule" />
+        android:title="@string/schedule" />
     <item
         android:id="@+id/itemAccount"
         android:icon="@drawable/ic_account_simple"
-        android:title="@string/itemAccount" />
+        android:title="@string/account" />
 </menu>

@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Dnevnjak</string>
-    <string name="buttonRecyclerView">Reciklaza Pregled</string>
-    <string name="buttonRotationAndViewModels">Rotacija i ViewModeli</string>
-    <string name="buttonStyledTextViews">Stilisani TextViewovi</string>
-    <string name="textOne">Jedan</string>
-    <string name="textTwo">Dva</string>
-    <string name="textThree">Tri</string>
-    <string name="textFour">Cetiri</string>
-    <string name="textFive">Pet</string>
-    <string name="buttonDatabase">Database</string>
-    <string name="add_user">Add User</string>
-    <string name="editTextEmail">Email</string>
-    <string name="editTextUsername">Username</string>
-    <string name="editTextPass">Password</string>
-    <string name="buttonRegister">Register</string>
-    <string name="buttonLogin">Login</string>
-    <string name="buttonBack">Back</string>
-    <string name="itemCalendar">Calendar</string>
-    <string name="itemSchedule">Schedule</string>
-    <string name="itemAccount">Account</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="back">Back</string>
+    <string name="exit">Exit</string>
+    <string name="calendar">Calendar</string>
+    <string name="schedule">Schedule</string>
+    <string name="account">Account</string>
     <string name="dnevnjakTag">DNEVNJAK</string>
-    <string name="userSharedPreference">USER_SP</string>
     <string name="dnevnjakSharedPreferences">DNEVNJAK_SP</string>
+    <string name="userSharedPreference">USER_SP</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="changePassword">Change Password</string>
+    <string name="logout">Logout</string>
+    <string name="dnevnjak">Dnevnjak</string>
+    <string name="confirm">Confirm</string>
+    <string name="oldPass">Old Password</string>
+    <string name="newPass">New Password</string>
+    <string name="confirmNewPass">Confirm New Password</string>
 </resources>

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.splashscreen.SplashScreen;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import rs.raf.dnevnjak.R;
-import rs.raf.dnevnjak.app.DnevnjakApp;
 import rs.raf.dnevnjak.model.ServiceUser;
 import rs.raf.dnevnjak.util.DatabaseHelper;
 import rs.raf.dnevnjak.util.Util;
@@ -32,7 +30,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         splashScreen.setKeepOnScreenCondition(() -> {
             try {
                 Thread.sleep(1000);
-                ServiceUser serviceUser = Util.checkUserSharedPreference(this);
+                ServiceUser serviceUser = Util.getUserSharedPreference(this);
                 if(serviceUser != null){
                     Log.i(String.valueOf(R.string.dnevnjakTag), serviceUser.getUsername());
                     DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);

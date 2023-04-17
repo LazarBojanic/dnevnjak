@@ -41,14 +41,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
-    public boolean passwordIsValid(String str) {
-        String specialCharacters = "~#^|$%&*!";
-        for (int i = 0; i < str.length(); i++) {
-            if (specialCharacters.contains(String.valueOf(str.charAt(i)))) {
+    public boolean passwordIsValid(Context context, String pass) {
+        if(!pass.equals("")){
+            if(pass.length() >= 5){
+                String specialCharacters = "~#^|$%&*!";
+                for (int i = 0; i < pass.length(); i++) {
+                    if (specialCharacters.contains(String.valueOf(pass.charAt(i)))) {
+                        Toast.makeText(context, "Password cannot specials characters (~#^|$%&*!)", Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else{
+                Toast.makeText(context, "Password must have at least 5 characters", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
-        return true;
+        else{
+            Toast.makeText(context, "Password cannot be empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
     public boolean loginUser(Context context, ServiceUser serviceUser) throws JsonProcessingException {
         if(validateUserData(context, serviceUser)){
@@ -61,11 +74,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String columnPass = resultSet.getString(Math.abs(resultSet.getColumnIndex("pass")));
                 if(columnPass != null){
                     if(Hasher.checkPassword(serviceUser.getPass(), columnPass)){
-                        Util.putUserSharedPreference(context, serviceUser);
-                        return true;
+                        Integer id = resultSet.getInt(Math.abs(resultSet.getColumnIndex("id")));
+                        if(id >= 1){
+                            serviceUser.setId(id);
+                            if(Util.putUserSharedPreference(context, serviceUser)){
+                                resultSet.close();
+                                sqLiteDatabase.close();
+                                return true;
+                            }
+                            else{
+                                resultSet.close();
+                                sqLiteDatabase.close();
+                                return false;
+                            }
+                        }
+                        else{
+                            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                            resultSet.close();
+                            sqLiteDatabase.close();
+                            return false;
+                        }
                     }
                     else{
-                        Toast.makeText(context, "Password doesn't match", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Incorrect password", Toast.LENGTH_SHORT).show();
                         resultSet.close();
                         sqLiteDatabase.close();
                         return false;
@@ -90,18 +121,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Username cannot be empty", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(serviceUser.getPass().equals("")){
-            Toast.makeText(context, "Password cannot be empty", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else{
-            if(serviceUser.getPass().length() < 5){
-                return false;
-            }
-            else{
-                return passwordIsValid(serviceUser.getPass());
-            }
-        }
+        return passwordIsValid(context, serviceUser.getPass());
     }
     public boolean registerUser(Context context, ServiceUser serviceUser) throws JsonProcessingException {
 
@@ -146,9 +166,86 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("pass", serviceUser.getPass());
 
         long rows = sqLiteDatabase.insert("users", null, contentValues);
+
+
+
         sqLiteDatabase.close();
 
         return rows >= 0;
+    }
+    public boolean checkPasswordValidityWhenChanging(Context context, Integer id, String oldPass, String newPass, String confirmNewPass){
+        if(newPass.equals(confirmNewPass)){
+            if(!oldPass.equals(newPass)){
+                if(passwordIsValid(context, newPass)){
+                    return verifyOldPasswordMatches(context, id, oldPass);
+                }
+                else{
+                    return false;
+                }
+            }
+            else{
+                Toast.makeText(context, "New password must be different from old password", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        else{
+            Toast.makeText(context, "New password not incorrectly confirmed", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+    public boolean verifyOldPasswordMatches(Context context, Integer id, String oldPass){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor resultSet = sqLiteDatabase.rawQuery("SELECT * FROM users WHERE id = ?", new String[]{id.toString()});
+        if(resultSet.moveToFirst()){
+            String columnPass = resultSet.getString(Math.abs(resultSet.getColumnIndex("pass")));
+            if(Hasher.checkPassword(oldPass, columnPass)){
+                resultSet.close();
+                sqLiteDatabase.close();
+                return true;
+            }
+            else{
+                Toast.makeText(context, "Old password doesn't match", Toast.LENGTH_SHORT).show();
+                resultSet.close();
+                sqLiteDatabase.close();
+                return false;
+            }
+        }
+        else{
+            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+            resultSet.close();
+            sqLiteDatabase.close();
+            return false;
+        }
+    }
+    public boolean changeUserPassword(Context context, String oldPass, String newPass, String confirmNewPass){
+        ServiceUser serviceUser = Util.getUserSharedPreference(context);
+        if(serviceUser != null){
+            Integer id = serviceUser.getId();
+            if(checkPasswordValidityWhenChanging(context, id, oldPass, newPass, confirmNewPass)){
+                SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("pass", confirmNewPass);
+                int rows = sqLiteDatabase.update("users", contentValues, "id = ?", new String[] {id.toString()});
+                if(rows > 0){
+                    Toast.makeText(context, "Password successfully updated", Toast.LENGTH_SHORT).show();
+                    sqLiteDatabase.close();
+                    serviceUser.setPass(newPass);
+                    return Util.putUserSharedPreference(context, serviceUser);
+                }
+                else{
+                    Toast.makeText(context, "Error updating password", Toast.LENGTH_SHORT).show();
+                    sqLiteDatabase.close();
+                    return false;
+                }
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+
     }
     public void updateUser(ServiceUser serviceUser){
 
