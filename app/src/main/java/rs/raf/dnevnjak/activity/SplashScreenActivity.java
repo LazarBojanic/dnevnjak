@@ -29,12 +29,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         splashScreen.setKeepOnScreenCondition(() -> {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
                 ServiceUser serviceUser = Util.getUserSharedPreference(this);
                 if(serviceUser != null){
-                    Log.i(String.valueOf(R.string.dnevnjakTag), serviceUser.getUsername());
+                    Log.i(String.valueOf(R.string.dnevnjakTag), serviceUser.toString());
                     DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
-                    if(databaseHelper.loginUser(this, serviceUser)){
+                    if(databaseHelper.loginUserWithSharedPreferences(this, serviceUser)){
                         Log.i(getResources().getString(R.string.dnevnjakTag), "Login Successful");
                         Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(this, MainActivity.class);
@@ -53,7 +53,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             }
-            catch (InterruptedException | JsonProcessingException e) {
+            catch (InterruptedException e) {
                 Log.i(getResources().getString(R.string.dnevnjakTag), "Login Failed 3");
                 Intent intent = new Intent(this, LoginAndRegisterActivity.class);
                 startActivity(intent);

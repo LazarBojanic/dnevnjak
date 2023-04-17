@@ -14,7 +14,7 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyTheme"
-        tools:targetApi="30">
+        tools:targetApi="33">
         <activity
             android:name=".activity.ChangePasswordActivity"
             android:exported="false" />
