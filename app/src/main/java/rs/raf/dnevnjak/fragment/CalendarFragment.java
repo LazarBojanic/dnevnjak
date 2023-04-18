@@ -35,6 +35,9 @@ public class CalendarFragment extends Fragment implements CalendarRecyclerViewAd
     public CalendarFragment() {
         // Required empty public constructor
     }
+    public void initCalendarDays(){
+        
+    }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

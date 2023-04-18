@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
+
 import rs.raf.dnevnjak.R;
 
 public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRecyclerViewAdapter.CalendarDayViewHolder> {
@@ -45,6 +47,7 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
 
     // stores and recycles views as they are scrolled off screen
     public class CalendarDayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private LocalDate date;
         TextView textViewCalendarDay;
 
         CalendarDayViewHolder(View itemView) {
@@ -55,7 +58,11 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (mClickListener != null) {
+                //maybe regular getAdapterPosition();
+                mClickListener.onItemClick(view, getBindingAdapterPosition());
+            }
+
         }
     }
 

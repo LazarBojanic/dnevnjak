@@ -1,23 +1,23 @@
 <resources>
     <string name="app_name">Dnevnjak</string>
-    <string name="login">Uloguj Se</string>
-    <string name="register">Registruj Se</string>
-    <string name="back">Nazad</string>
-    <string name="exit">Izlaz</string>
-    <string name="calendar">Kalendar</string>
-    <string name="schedule">Raspored</string>
-    <string name="account">Nalog</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="back">Back</string>
+    <string name="exit">Exit</string>
+    <string name="calendar">Calendar</string>
+    <string name="schedule">Schedule</string>
+    <string name="account">Account</string>
     <string name="dnevnjakTag">DNEVNJAK</string>
     <string name="dnevnjakSharedPreferences">DNEVNJAK_SP</string>
     <string name="userSharedPreference">USER_SP</string>
     <string name="email">Email</string>
-    <string name="username">Korisničko Ime</string>
+    <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="changePassword">Promeni Password</string>
-    <string name="logout">Izloguj Se</string>
+    <string name="changePassword">Change Password</string>
+    <string name="logout">Logout</string>
     <string name="dnevnjak">Dnevnjak</string>
-    <string name="confirm">Potvrdi</string>
-    <string name="oldPass">Stari Password</string>
-    <string name="newPass">Novi Password</string>
-    <string name="confirmNewPass">Potvrdi Novi Password</string>
+    <string name="confirm">Confirm</string>
+    <string name="oldPass">Old Password</string>
+    <string name="newPass">New Password</string>
+    <string name="confirmNewPass">Confirm New Password</string>
 </resources>
