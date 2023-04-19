@@ -14,12 +14,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.io.Serializable;
-
-import rs.raf.dnevnjak.R;
-import rs.raf.dnevnjak.app.DnevnjakApp;
+import rs.raf.dnevnjak.model.Obligation;
 import rs.raf.dnevnjak.model.ServiceUser;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -38,8 +38,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String query = " CREATE TABLE users ( id INTEGER PRIMARY KEY, email TEXT NOT NULL, username TEXT NOT NULL, pass TEXT NOT NULL )";
-        sqLiteDatabase.execSQL(query);
+        String queryUsers = " CREATE TABLE users ( id INTEGER PRIMARY KEY, email TEXT NOT NULL, username TEXT NOT NULL, pass TEXT NOT NULL )";
+        sqLiteDatabase.execSQL(queryUsers);
+        String queryObligations = " CREATE TABLE obligations ( id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL, o_title TEXT, o_description TEXT, o_priority TEXT, o_date TEXT NOT NULL, o_start_time TEXT, o_end_time TEXT )";
+        sqLiteDatabase.execSQL(queryObligations);
     }
 
     @Override
@@ -120,7 +122,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.i(context.getResources().getString(rs.raf.dnevnjak.R.string.dnevnjakTag), "Error5");
         return false;
     }
-    public boolean loginUser(Context context, ServiceUser serviceUser) throws JsonProcessingException {
+    public boolean loginUser(Context context, ServiceUser serviceUser) {
         if(validateUserData(context, serviceUser, false)){
             SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
@@ -194,7 +196,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-    public boolean registerUser(Context context, ServiceUser serviceUser) throws JsonProcessingException {
+    public boolean registerUser(Context context, ServiceUser serviceUser) {
 
         if(validateUserData(context, serviceUser, false)){
             SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -332,5 +334,107 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public void deleteUserById(Integer id){
 
+    }
+
+
+
+    public boolean addObligation(Context context, String title, String description, String priority, LocalDate date, String startTimeString, String endTimeString) {
+        ServiceUser serviceUser = Util.getUserSharedPreference(context);
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        if(serviceUser != null){
+            String query = "SELECT * FROM obligations WHERE user_id = ?";
+            Cursor resultSet = sqLiteDatabase.rawQuery(query, new String[]{serviceUser.getId().toString()});
+            boolean dataValidated = false;
+
+            if(resultSet.moveToFirst()){
+                do{
+                    String columnDate = resultSet.getString(Math.abs(resultSet.getColumnIndex("o_date")));
+                    String columnStartTime = resultSet.getString(Math.abs(resultSet.getColumnIndex("o_start_time")));
+                    String columnEndTime = resultSet.getString(Math.abs(resultSet.getColumnIndex("o_end_time")));
+                    dataValidated = Util.verifyDateAndTime(columnDate, date, columnStartTime, columnEndTime, startTimeString, endTimeString);
+                }
+                while(resultSet.moveToNext());
+                resultSet.close();
+                if(dataValidated){
+                    String dateString = Util.localDateToString(date);
+                    if(dateString != null){
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put("user_id", serviceUser.getId());
+                        contentValues.put("o_title", title);
+                        contentValues.put("o_description", description);
+                        contentValues.put("o_priority", priority);
+                        contentValues.put("o_date", dateString);
+                        contentValues.put("o_start_time", startTimeString);
+                        contentValues.put("o_end_time", endTimeString);
+
+                        sqLiteDatabase.insert("obligations", null, contentValues);
+                        sqLiteDatabase.close();
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                else{
+                    return false;
+                }
+            }
+            else{
+                resultSet.close();
+                if(Util.timeIntervalStringIsValid(startTimeString, endTimeString)){
+                    String dateString = Util.localDateToString(date);
+                    if(dateString != null){
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put("user_id", serviceUser.getId());
+                        contentValues.put("o_title", title);
+                        contentValues.put("o_description", description);
+                        contentValues.put("o_priority", priority);
+                        contentValues.put("o_date", dateString);
+                        contentValues.put("o_start_time", startTimeString);
+                        contentValues.put("o_end_time", endTimeString);
+
+                        sqLiteDatabase.insert("obligations", null, contentValues);
+                        sqLiteDatabase.close();
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        else{
+            return false;
+        }
+    }
+    public List<Obligation> getAllObligations(Context context){
+        ServiceUser serviceUser = Util.getUserSharedPreference(context);
+        List<Obligation> obligationList = null;
+        if(serviceUser != null){
+            obligationList = new ArrayList<>();
+            SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+            Cursor resultSet = sqLiteDatabase.rawQuery("SELECT * FROM obligations WHERE user_id = ?", new String[]{serviceUser.getId().toString()});
+
+            if(resultSet.moveToFirst()){
+                do{
+                    Integer id = resultSet.getInt(Math.abs(resultSet.getColumnIndex("id")));
+                    Integer user_id = resultSet.getInt(Math.abs(resultSet.getColumnIndex("user_id")));
+                    String title = resultSet.getString(Math.abs(resultSet.getColumnIndex("o_title")));
+                    String description = resultSet.getString(Math.abs(resultSet.getColumnIndex("o_description")));
+                    String priority = resultSet.getString(Math.abs(resultSet.getColumnIndex("o_priority")));
+                    String date = resultSet.getString(Math.abs(resultSet.getColumnIndex("o_date")));
+                    String startTime = resultSet.getString(Math.abs(resultSet.getColumnIndex("o_start_time")));
+                    String endTime = resultSet.getString(Math.abs(resultSet.getColumnIndex("o_end_time")));
+
+                    Obligation obligation = new Obligation(id, user_id, title, description, priority, Util.dateStringToLocalDate(date), Util.timeStringToLocalTime(startTime), Util.timeStringToLocalTime(endTime));
+                    obligationList.add(obligation);
+                }
+                while(resultSet.moveToNext());
+            }
+        }
+        return obligationList;
     }
 }

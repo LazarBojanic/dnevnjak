@@ -44,7 +44,7 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
     }
 
     private void initListeners(){
-        buttonLogin.setOnClickListener(v -> {
+        buttonLogin.setOnClickListener(view -> {
             try{
                 ServiceUser serviceUser = new ServiceUser(-1, editTextEmail.getText().toString(), editTextUsername.getText().toString(), editTextPass.getText().toString());
 
@@ -65,7 +65,7 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
             }
         });
 
-        buttonRegister.setOnClickListener(v -> {
+        buttonRegister.setOnClickListener(view -> {
             try{
                 ServiceUser serviceUser = new ServiceUser(-1, editTextEmail.getText().toString(), editTextUsername.getText().toString(), editTextPass.getText().toString());
 

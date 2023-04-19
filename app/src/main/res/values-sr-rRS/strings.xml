@@ -21,4 +21,21 @@
     <string name="oldPass">Stari Password</string>
     <string name="newPass">Novi Password</string>
     <string name="confirmNewPass">Potvrdi Novi Password</string>
+    <string name="toolbar">Tulbar</string>
+    <string name="showPastObligations">Prikaži prošle obaveze</string>
+    <string name="low">Nizak</string>
+    <string name="mid">Srednji</string>
+    <string name="high">Visok</string>
+    <string name="add">Dodaj</string>
+    <string name="title">Naziv</string>
+    <string name="time">Vreme</string>
+    <string name="description">Opis</string>
+    <string name="create">Napravi</string>
+    <string name="cancel">Odustani</string>
+    <string name="startTime">Početno Vreme</string>
+    <string name="endTime">Krajno Vreme</string>
+    <string name="delete">Obriši</string>
+    <string name="edit">Izmeni</string>
+    <string name="argObligation">ARG_OBLIGATION</string>
+    <string name="extraObligation">EXTRA_OBLIGATION</string>
 </resources>

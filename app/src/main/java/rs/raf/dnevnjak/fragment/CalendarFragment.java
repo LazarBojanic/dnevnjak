@@ -10,8 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import rs.raf.dnevnjak.R;
 import rs.raf.dnevnjak.adapter.CalendarRecyclerViewAdapter;
+import rs.raf.dnevnjak.util.Util;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,11 +47,11 @@ public class CalendarFragment extends Fragment implements CalendarRecyclerViewAd
         super.onViewCreated(view, savedInstanceState);
         initView();
 
-        String[] data = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48"};
+        List<LocalDate> dateList = Util.generateCalendarPage(LocalDate.now());
 
         int numberOfColumns = 7;
         recyclerViewCalendar.setLayoutManager(new GridLayoutManager(requireContext(), numberOfColumns));
-        calendarRecyclerViewAdapter = new CalendarRecyclerViewAdapter(requireContext(), data);
+        calendarRecyclerViewAdapter = new CalendarRecyclerViewAdapter(requireContext(), dateList);
         calendarRecyclerViewAdapter.setClickListener(this);
         recyclerViewCalendar.setAdapter(calendarRecyclerViewAdapter);
     }

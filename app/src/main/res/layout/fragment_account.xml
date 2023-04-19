@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:layout_margin="0dp"
+    android:padding="0dp"
     tools:context=".fragment.AccountFragment">
 
 
@@ -21,6 +22,7 @@
             android:src="@drawable/account_big" />
 
         <TextView
+            android:theme="@style/MyTextStyle"
             android:id="@+id/textViewUsername"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -31,6 +33,7 @@
             android:text="@string/username" />
 
         <TextView
+            android:theme="@style/MyTextStyle"
             android:id="@+id/textViewEmail"
             android:layout_width="match_parent"
             android:layout_height="0dp"

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyTheme"
         tools:targetApi="33">
         <activity
+            android:name=".activity.AddObligationActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ChangePasswordActivity"
             android:exported="false" />
         <activity

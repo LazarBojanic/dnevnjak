@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutObligation"
+        android:layout_width="match_parent"
+        android:layout_height="136dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/imageViewPriority"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:foreground="@drawable/priority"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:foregroundTint="?attr/colorSecondary"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:theme="@style/MyTextStyle"
+                android:textColor="?attr/colorPrimary"
+                android:id="@+id/textViewTime"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:text="@string/time" />
+
+            <TextView
+                android:theme="@style/MyTextStyle"
+                android:textColor="?attr/colorPrimary"
+                android:id="@+id/textViewTitle"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:text="@string/title" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:layout_margin="5dp">
+
+            <ImageButton
+                app:tint="?attr/colorSecondary"
+                android:id="@+id/imageButtonEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="end"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:contentDescription="@string/edit"
+                android:padding="5dp"
+                android:src="@drawable/edit" />
+
+            <ImageButton
+                app:tint="?attr/colorSecondary"
+                android:id="@+id/imageButtonDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="end"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:contentDescription="@string/delete"
+                android:padding="5dp"
+                android:src="@drawable/delete" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</FrameLayout>

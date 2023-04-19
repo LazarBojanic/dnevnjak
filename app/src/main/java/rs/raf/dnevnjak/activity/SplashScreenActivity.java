@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import rs.raf.dnevnjak.R;
 import rs.raf.dnevnjak.model.ServiceUser;

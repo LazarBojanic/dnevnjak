@@ -54,7 +54,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 finish();
             }
         });
-        buttonBack.setOnClickListener(v -> {
+        buttonBack.setOnClickListener(view -> {
             finish();
         });
     }

@@ -20,4 +20,21 @@
     <string name="oldPass">Old Password</string>
     <string name="newPass">New Password</string>
     <string name="confirmNewPass">Confirm New Password</string>
+    <string name="toolbar">Toolbar</string>
+    <string name="showPastObligations">Show Past Obligations</string>
+    <string name="low">Low</string>
+    <string name="mid">Mid</string>
+    <string name="high">High</string>
+    <string name="add">Add</string>
+    <string name="title">Title</string>
+    <string name="time">Time</string>
+    <string name="description">Description</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="startTime">Start Time</string>
+    <string name="endTime">End Time</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="argObligation">ARG_OBLIGATION</string>
+    <string name="extraObligation">EXTRA_OBLIGATION</string>
 </resources>

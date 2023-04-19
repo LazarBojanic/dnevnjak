@@ -69,11 +69,11 @@ public class AccountFragment extends Fragment {
         }
     }
     private void initListeners(){
-        buttonChangePassword.setOnClickListener(v ->{
+        buttonChangePassword.setOnClickListener(view ->{
             Intent intent = new Intent(requireActivity(), ChangePasswordActivity.class);
             startActivity(intent);
         });
-        buttonLogout.setOnClickListener(v ->{
+        buttonLogout.setOnClickListener(view ->{
             if(Util.removeUserSharedPreference(requireActivity())){
                 Intent intent = new Intent(requireActivity(), LoginAndRegisterActivity.class);
                 startActivity(intent);

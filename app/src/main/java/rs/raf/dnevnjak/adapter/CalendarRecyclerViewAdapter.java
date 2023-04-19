@@ -10,18 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import rs.raf.dnevnjak.R;
 
 public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRecyclerViewAdapter.CalendarDayViewHolder> {
-    private String[] mData;
+    private List<LocalDate> dateList;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public CalendarRecyclerViewAdapter(Context context, String[] data) {
+    public CalendarRecyclerViewAdapter(Context context, List<LocalDate> dateList) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.dateList = dateList;
     }
 
     // inflates the cell layout from xml when needed
@@ -35,13 +36,16 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
     // binds the data to the TextView in each cell
     @Override
     public void onBindViewHolder(@NonNull CalendarDayViewHolder holder, int position) {
-        holder.textViewCalendarDay.setText(mData[position]);
+        holder.itemView.setOnClickListener(view -> {
+
+        });
+        holder.textViewCalendarDay.setText(String.valueOf(dateList.get(position).getDayOfMonth()));
     }
 
     // total number of cells
     @Override
     public int getItemCount() {
-        return mData.length;
+        return dateList.size();
     }
 
 
@@ -67,8 +71,8 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
     }
 
     // convenience method for getting data at click position
-    String getItem(int id) {
-        return mData[id];
+    LocalDate getItem(int id) {
+        return dateList.get(id);
     }
 
     // allows clicks events to be caught
