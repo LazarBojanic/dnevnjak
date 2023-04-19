@@ -107,8 +107,13 @@ public class ScheduleFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerViewObligations.setLayoutManager(layoutManager);
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(requireActivity());
-        ObligationsRecyclerViewAdapter obligationsRecyclerViewAdapter = new ObligationsRecyclerViewAdapter(databaseHelper.getAllObligations(requireActivity()));
+        List<Obligation> obligationsList = databaseHelper.getAllObligations(requireActivity());
+        ObligationsRecyclerViewAdapter obligationsRecyclerViewAdapter = new ObligationsRecyclerViewAdapter();
+        if(obligationsList != null){
+            obligationsRecyclerViewAdapter = new ObligationsRecyclerViewAdapter(obligationsList);
+        }
         recyclerViewObligations.setAdapter(obligationsRecyclerViewAdapter);
+
     }
     private void initListeners(){
         radioButtonLow.setOnClickListener(view -> {

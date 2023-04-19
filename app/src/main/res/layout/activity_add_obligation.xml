@@ -12,13 +12,16 @@
         android:paddingVertical="25dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:orientation="vertical">
 
 
         <RadioGroup
+            android:layout_margin="5dp"
             android:id="@+id/radioGroupPriority"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <RadioButton
@@ -57,21 +60,26 @@
         </RadioGroup>
 
         <EditText
+            android:padding="10dp"
             style="@style/MyTextStyle"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:id="@+id/editTextTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:ems="10"
             android:inputType="text"
             android:hint="@string/title" />
 
         <LinearLayout
+            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:orientation="horizontal">
 
             <EditText
+                style="@style/MyTextStyle"
                 android:id="@+id/editTextStartTime"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -82,6 +90,7 @@
                 android:inputType="time" />
 
             <EditText
+                style="@style/MyTextStyle"
                 android:id="@+id/editTextEndTime"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -93,25 +102,30 @@
         </LinearLayout>
 
         <EditText
+            android:layout_margin="5dp"
             android:id="@+id/editTextDescription"
             style="@style/MyTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="417dp"
+            android:layout_height="0dp"
+            android:layout_weight="5"
             android:ems="10"
             android:hint="@string/description"
             android:inputType="textMultiLine"
             android:textColor="@color/black" />
 
         <LinearLayout
+
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:orientation="horizontal"
             android:padding="10dp">
 
             <Button
                 android:id="@+id/buttonCreate"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:text="@string/create"
@@ -121,7 +135,7 @@
             <Button
                 android:id="@+id/buttonCancel"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:text="@string/cancel"

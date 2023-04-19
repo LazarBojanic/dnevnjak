@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="0dp"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
     android:layout_margin="0dp"
     tools:context=".activity.MainActivity">
 
@@ -12,39 +15,42 @@
         android:id="@+id/toolbarMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:background="?attr/colorSecondaryVariant"
         android:gravity="center"
         android:minHeight="?attr/actionBarSize"
         android:textAlignment="center"
         app:flow_horizontalAlign="center"
+        app:layout_constraintBottom_toTopOf="@+id/viewPagerFragments"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:theme="@style/MyTextStyle"
-            android:layout_gravity="center"
             android:id="@+id/textViewToolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/toolbar" />
+            android:layout_gravity="center"
+            android:text="@string/toolbar"
+            android:theme="@style/MyTextStyle" />
     </androidx.appcompat.widget.Toolbar>
 
-    <FrameLayout
-        android:id="@+id/frameLayoutFragments"
-        android:layout_width="391dp"
-        android:layout_height="584dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
+    <rs.raf.dnevnjak.viewpager.ViewPagerFragments
+        android:id="@+id/viewPagerFragments"
+        android:layout_width="366dp"
+        android:layout_height="721dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="#00000000"
+        android:backgroundTint="#00000000"
+        android:contentDescription="@string/fragments"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarMain"
-        app:layout_constraintVertical_bias="0.0">
-
-    </FrameLayout>
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMain" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -55,6 +61,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/nav_menu" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

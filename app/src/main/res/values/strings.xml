@@ -37,4 +37,5 @@
     <string name="edit">Edit</string>
     <string name="argObligation">ARG_OBLIGATION</string>
     <string name="extraObligation">EXTRA_OBLIGATION</string>
+    <string name="fragments">Fragments</string>
 </resources>

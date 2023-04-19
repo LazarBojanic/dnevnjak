@@ -34,6 +34,7 @@ public class AddObligationActivity extends AppCompatActivity {
     private EditText editTextDescription;
     private Button buttonCreate;
     private Button buttonCancel;
+    private RadioButton radioButtonSelected;
 
     public AddObligationActivity() {
 
@@ -70,6 +71,7 @@ public class AddObligationActivity extends AppCompatActivity {
 
         initView();
         initListeners();
+        radioButtonLow.callOnClick();
     }
 
     private void initView(){
@@ -126,6 +128,24 @@ public class AddObligationActivity extends AppCompatActivity {
         buttonCancel.setOnClickListener(view -> {
             finish();
         });
+        radioButtonLow.setOnClickListener(view -> {
+            selectButton(radioButtonLow);
+        });
+        radioButtonMid.setOnClickListener(view -> {
+            selectButton(radioButtonMid);
+        });
+        radioButtonHigh.setOnClickListener(view -> {
+            selectButton(radioButtonHigh);
+        });
+    }
+    private void selectButton(RadioButton radioButton){
+        if (radioButtonSelected != null) {
+            // Deselect the previous button
+            radioButtonSelected.setElevation(0);
+        }
+        // Select the new button
+        radioButton.setElevation(50);
+        radioButtonSelected = radioButton;
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,11 +22,13 @@ import rs.raf.dnevnjak.fragment.AccountFragment;
 import rs.raf.dnevnjak.fragment.CalendarFragment;
 import rs.raf.dnevnjak.fragment.ScheduleFragment;
 import rs.raf.dnevnjak.util.Util;
+import rs.raf.dnevnjak.viewpager.CustomPagerAdapter;
+import rs.raf.dnevnjak.viewpager.ViewPagerFragments;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
-    private FrameLayout frameLayoutFragments;
+    private ViewPagerFragments viewPagerFragments;
     private Toolbar toolbarMain;
     private TextView textViewToolbar;
     private LocalDate date;
@@ -43,9 +44,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView(){
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        frameLayoutFragments = findViewById(R.id.frameLayoutFragments);
+        viewPagerFragments = findViewById(R.id.viewPagerFragments);
+        viewPagerFragments.setAdapter(new CustomPagerAdapter(getSupportFragmentManager()));
         toolbarMain = findViewById(R.id.toolbarMain);
         textViewToolbar = findViewById(R.id.textViewToolbar);
+
+
 
         date = LocalDate.now();
 
@@ -59,27 +63,29 @@ public class MainActivity extends AppCompatActivity {
     public void displayFragment(int itemId){
         Fragment fragment = null;
         String dateString = date.getMonth().name() + ", " + date.getDayOfMonth() + ". " + date.getYear() + ".";
+        int fragmentNumber = 0;
         switch (itemId) {
             case R.id.itemCalendar:
-                fragment = new CalendarFragment();
+                fragmentNumber = CustomPagerAdapter.FRAGMENT_1;
                 List<LocalDate> dateList = Util.generateCalendarPage(LocalDate.now());
                 Util.printDateList(dateList, this);
                 break;
             case R.id.itemSchedule:
-                fragment = new ScheduleFragment();
+                fragmentNumber = CustomPagerAdapter.FRAGMENT_2;
                 textViewToolbar.setText(dateString);
                 break;
             case R.id.itemAccount:
-                fragment = new AccountFragment();
+                fragmentNumber = CustomPagerAdapter.FRAGMENT_3;
                 textViewToolbar.setText(dateString);
                 break;
 
         }
-        if (fragment != null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(frameLayoutFragments.getId(), fragment);
-            ft.commit();
-        }
+//        if (fragment != null) {
+//            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//            ft.replace(viewPagerFragments.getId(), fragment);
+//            ft.commit();
+//        }
+        viewPagerFragments.setCurrentItem(fragmentNumber);
 
     }
     @Override
