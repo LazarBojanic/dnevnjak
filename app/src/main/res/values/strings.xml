@@ -38,4 +38,6 @@
     <string name="argObligation">ARG_OBLIGATION</string>
     <string name="extraObligation">EXTRA_OBLIGATION</string>
     <string name="fragments">Fragments</string>
+    <string name="save">Save</string>
+    <string name="stateObligation">STATE_OBLIGATION</string>
 </resources>

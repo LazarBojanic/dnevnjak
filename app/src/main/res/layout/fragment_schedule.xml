@@ -24,8 +24,11 @@
             android:textAlignment="center" />
 
         <androidx.appcompat.widget.SearchView
+
+            style="@style/MyTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
         <RadioGroup
             android:id="@+id/radioGroupPriority"
@@ -71,11 +74,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewObligations"
             android:layout_width="match_parent"
-            android:layout_height="455dp" />
+            android:layout_height="501dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="79dp">
+            android:layout_height="291dp">
 
             <ImageButton
                 android:id="@+id/imageButtonAdd"

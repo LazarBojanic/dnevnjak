@@ -4,20 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.AddObligationActivity">
-
+    tools:context=".activity.ObligationDetailsActivity">
 
     <LinearLayout
-        android:paddingHorizontal="15dp"
-        android:paddingVertical="25dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        android:padding="5dp"
+        android:layout_margin="5dp">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSecondaryVariant"
+            android:gravity="center"
+            android:minHeight="?attr/actionBarSize"
+            android:textAlignment="center"
+            app:flow_horizontalAlign="center">
+
+            <TextView
+                android:id="@+id/textViewToolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/toolbar"
+                android:theme="@style/MyTextStyle" />
+        </androidx.appcompat.widget.Toolbar>
 
         <RadioGroup
             android:layout_margin="5dp"
+            android:padding="5dp"
             android:id="@+id/radioGroupPriority"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -59,93 +78,65 @@
 
         </RadioGroup>
 
-        <EditText
-            android:padding="10dp"
+        <TextView
             style="@style/MyTextStyle"
-            android:textColor="@color/white"
-            android:id="@+id/editTextTitle"
+            android:id="@+id/textViewTime"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
-            android:ems="10"
-            android:inputType="text"
-            android:hint="@string/title" />
-
-        <LinearLayout
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="horizontal">
-
-            <EditText
-                style="@style/MyTextStyle"
-                android:id="@+id/editTextStartTime"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/startTime"
-                android:inputType="time" />
-
-            <EditText
-                style="@style/MyTextStyle"
-                android:id="@+id/editTextEndTime"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/endTime"
-                android:inputType="time" />
-        </LinearLayout>
-
-        <EditText
+            android:layout_weight="1"
+            android:padding="5dp"
             android:layout_margin="5dp"
-            android:id="@+id/editTextDescription"
+            android:text="TextView" />
+
+        <TextView
             style="@style/MyTextStyle"
-            android:gravity="start|top"
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:text="TextView" />
+
+        <TextView
+            style="@style/MyTextStyle"
             android:textSize="14sp"
+            android:gravity="start|top"
             android:textAlignment="textStart"
+            android:id="@+id/textViewDescription"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
             android:ems="10"
-            android:hint="@string/description"
-            android:inputType="textMultiLine" />
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:hint="@string/description"/>
 
         <LinearLayout
-
-            android:layout_margin="5dp"
             android:layout_width="match_parent"
+            android:orientation="horizontal"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="5dp"
+            android:layout_margin="5dp">
 
             <Button
-                android:id="@+id/buttonCreate"
+                android:id="@+id/buttonEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="@string/create"
-                style="@style/GreenButtonStyle"
-                />
+                android:text="@string/edit"
+                android:padding="5dp"
+                android:layout_margin="5dp"/>
 
             <Button
-                android:id="@+id/buttonCancel"
+                android:id="@+id/buttonDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="@string/cancel"
-                style="@style/RedButtonStyle"
-                />
+                android:text="@string/delete"
+                android:padding="5dp"
+                android:layout_margin="5dp"/>
         </LinearLayout>
-
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

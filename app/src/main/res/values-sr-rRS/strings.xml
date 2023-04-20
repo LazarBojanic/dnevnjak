@@ -38,5 +38,7 @@
     <string name="edit">Izmeni</string>
     <string name="argObligation">ARG_OBLIGATION</string>
     <string name="extraObligation">EXTRA_OBLIGATION</string>
-    <string name="fragments">Fragments</string>
+    <string name="fragments">Fragmenti</string>
+    <string name="save">Save</string>
+    <string name="stateObligation">STATE_OBLIGATION</string>
 </resources>

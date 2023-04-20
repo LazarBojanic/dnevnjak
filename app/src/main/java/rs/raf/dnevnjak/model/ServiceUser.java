@@ -1,8 +1,9 @@
 package rs.raf.dnevnjak.model;
 
 
+import java.io.Serializable;
 
-public class ServiceUser {
+public class ServiceUser implements Serializable {
     private Integer id;
     private String email;
     private String username;

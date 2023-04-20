@@ -14,6 +14,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 
 import rs.raf.dnevnjak.R;
@@ -127,7 +128,7 @@ public class Util {
     }
     public static LocalTime timeStringToLocalTime(String timeString){
         try{
-            return LocalTime.parse(timeString);
+            return LocalTime.parse(timeString, DateTimeFormatter.ofPattern("HH:mm"));
         }
         catch(DateTimeParseException e){
             return null;
@@ -135,7 +136,7 @@ public class Util {
     }
     public static String localTimeToString(LocalTime time){
         try{
-            return time.format(DateTimeFormatter.ISO_LOCAL_TIME);
+            return time.format(DateTimeFormatter.ofPattern("HH:mm"));
         }
         catch(DateTimeParseException e){
             return null;

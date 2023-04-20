@@ -19,6 +19,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import rs.raf.dnevnjak.activity.EditObligationActivity;
 import rs.raf.dnevnjak.model.Obligation;
 import rs.raf.dnevnjak.model.ServiceUser;
 
@@ -200,8 +201,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if(validateUserData(context, serviceUser, false)){
             SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-            String query = "SELECT * FROM users WHERE email = '" + serviceUser.getEmail() + "'";
-            Cursor resultSet = sqLiteDatabase.rawQuery(query, null);
+            String query = "SELECT * FROM users WHERE email = ?";
+            Cursor resultSet = sqLiteDatabase.rawQuery(query, new String[] {serviceUser.getEmail()});
 
             if (resultSet.moveToFirst()){
                 String columnEmail = resultSet.getString(Math.abs(resultSet.getColumnIndex("email")));
@@ -436,5 +437,85 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return obligationList;
+    }
+
+    public boolean updateObligation(Context context, Integer obligationId, String title, String description, String priority, LocalDate date, String startTimeString, String endTimeString) {
+        ServiceUser serviceUser = Util.getUserSharedPreference(context);
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        if(serviceUser != null){
+            String query = "SELECT * FROM obligations WHERE user_id = ? AND id != ?";
+            Cursor resultSet = sqLiteDatabase.rawQuery(query, new String[]{serviceUser.getId().toString(), obligationId.toString()});
+            boolean dataValidated = false;
+
+            if(resultSet.moveToFirst()){
+                do{
+                    String columnDate = resultSet.getString(Math.abs(resultSet.getColumnIndex("o_date")));
+                    String columnStartTime = resultSet.getString(Math.abs(resultSet.getColumnIndex("o_start_time")));
+                    String columnEndTime = resultSet.getString(Math.abs(resultSet.getColumnIndex("o_end_time")));
+                    dataValidated = Util.verifyDateAndTime(columnDate, date, columnStartTime, columnEndTime, startTimeString, endTimeString);
+                }
+                while(resultSet.moveToNext());
+                resultSet.close();
+                if(dataValidated){
+                    String dateString = Util.localDateToString(date);
+                    if(dateString != null){
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put("user_id", serviceUser.getId());
+                        contentValues.put("o_title", title);
+                        contentValues.put("o_description", description);
+                        contentValues.put("o_priority", priority);
+                        contentValues.put("o_date", dateString);
+                        contentValues.put("o_start_time", startTimeString);
+                        contentValues.put("o_end_time", endTimeString);
+
+                        sqLiteDatabase.update("obligations", contentValues, "id = ?", new String[]{obligationId.toString()});
+                        sqLiteDatabase.close();
+                        return true;
+                    }
+                    else{
+                        sqLiteDatabase.close();
+                        return false;
+                    }
+                }
+                else{
+                    resultSet.close();
+                    sqLiteDatabase.close();
+                    return false;
+                }
+            }
+            else{
+                resultSet.close();
+                if(Util.timeIntervalStringIsValid(startTimeString, endTimeString)){
+                    String dateString = Util.localDateToString(date);
+                    if(dateString != null){
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put("user_id", serviceUser.getId());
+                        contentValues.put("o_title", title);
+                        contentValues.put("o_description", description);
+                        contentValues.put("o_priority", priority);
+                        contentValues.put("o_date", dateString);
+                        contentValues.put("o_start_time", startTimeString);
+                        contentValues.put("o_end_time", endTimeString);
+
+                        sqLiteDatabase.insert("obligations", null, contentValues);
+                        sqLiteDatabase.close();
+                        return true;
+                    }
+                    else{
+                        sqLiteDatabase.close();
+                        return false;
+                    }
+                }
+                else{
+                    resultSet.close();
+                    sqLiteDatabase.close();
+                    return false;
+                }
+            }
+        }
+        else{
+            sqLiteDatabase.close();
+            return false;
+        }
     }
 }

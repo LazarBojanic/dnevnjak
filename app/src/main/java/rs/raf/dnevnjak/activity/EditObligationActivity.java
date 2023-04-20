@@ -23,7 +23,7 @@ import rs.raf.dnevnjak.util.DatabaseHelper;
 import rs.raf.dnevnjak.util.Util;
 import rs.raf.dnevnjak.viewmodel.ObligationViewModel;
 
-public class AddObligationActivity extends AppCompatActivity {
+public class EditObligationActivity extends AppCompatActivity {
 
     private RadioGroup radioGroupPriority;
     private RadioButton radioButtonLow;
@@ -33,13 +33,12 @@ public class AddObligationActivity extends AppCompatActivity {
     private EditText editTextStartTime;
     private EditText editTextEndTime;
     private EditText editTextDescription;
-    private Button buttonCreate;
+    private Button buttonSave;
     private Button buttonCancel;
     private RadioButton radioButtonSelected;
-
     private ObligationViewModel obligationViewModel;
 
-    public AddObligationActivity() {
+    public EditObligationActivity() {
 
     }
     public void attachObligationToViewElements(Obligation obligation){
@@ -62,26 +61,27 @@ public class AddObligationActivity extends AppCompatActivity {
             editTextEndTime.setText(endTimeString);
             editTextDescription.setText(obligation.getDescription());
         }
-
     }
     public void getExtraObligation(Bundle savedInstanceState){
         if(savedInstanceState == null){
             Intent intent = getIntent();
             Obligation obligation = intent.getSerializableExtra(getResources().getString(R.string.extraObligation), Obligation.class);
+            Log.i(getResources().getString(R.string.dnevnjakTag), "Regular " + obligation.toString());
             obligationViewModel.getObligationMutableLiveData().postValue(obligation);
-            Log.i(getResources().getString(R.string.dnevnjakTag), "Regular " +  obligation.toString());
+            obligationViewModel.getObligationMutableLiveData().observe(this, updatedObligation -> {
+                if(updatedObligation != null){
+                    attachObligationToViewElements(updatedObligation);
+                    Log.i(getResources().getString(R.string.dnevnjakTag), "Updated " +  updatedObligation.toString());
+                }
+                else{
+                    Log.i(getResources().getString(R.string.dnevnjakTag), "Updated obligation is nulllll");
+                }
+            });
         }
         else{
             obligationViewModel.getObligationMutableLiveData().postValue(savedInstanceState.getSerializable(getResources().getString(R.string.stateObligation), Obligation.class));
         }
-        Obligation updatedObligation = obligationViewModel.getObligationMutableLiveData().getValue();
-        if(updatedObligation != null){
-            attachObligationToViewElements(updatedObligation);
-            Log.i(getResources().getString(R.string.dnevnjakTag), "Updated " +  updatedObligation.toString());
-        }
-        else{
-            Log.i(getResources().getString(R.string.dnevnjakTag), "Updated obligation is null");
-        }
+
     }
 
     @Override
@@ -91,6 +91,7 @@ public class AddObligationActivity extends AppCompatActivity {
         initView();
         obligationViewModel = new ViewModelProvider(this).get(ObligationViewModel.class);
         getExtraObligation(savedInstanceState);
+
         initObservers();
         initListeners();
         radioButtonLow.callOnClick();
@@ -98,9 +99,7 @@ public class AddObligationActivity extends AppCompatActivity {
     }
     private void initObservers(){
         obligationViewModel.getObligationMutableLiveData().observe(this, obligation -> {
-            if(obligation != null){
-                attachObligationToViewElements(obligation);
-            }
+            attachObligationToViewElements(obligation);
         });
     }
     private void initView(){
@@ -117,7 +116,7 @@ public class AddObligationActivity extends AppCompatActivity {
 
         editTextDescription = findViewById(R.id.editTextDescription);
 
-        buttonCreate = findViewById(R.id.buttonCreate);
+        buttonSave = findViewById(R.id.buttonSave);
         buttonCancel = findViewById(R.id.buttonCancel);
 
     }
@@ -127,7 +126,7 @@ public class AddObligationActivity extends AppCompatActivity {
         outState.putSerializable(getResources().getString(R.string.stateObligation), obligationViewModel.getObligationMutableLiveData().getValue());
     }
     private void initListeners(){
-        buttonCreate.setOnClickListener(view -> {
+        buttonSave.setOnClickListener(view -> {
             int selectedRadioButtonId = radioGroupPriority.getCheckedRadioButtonId();
             String priority = "";
             switch(selectedRadioButtonId){
@@ -147,7 +146,13 @@ public class AddObligationActivity extends AppCompatActivity {
             String startTimeString = editTextStartTime.getText().toString();
             String endTimeString = editTextEndTime.getText().toString();
             DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
-            if(databaseHelper.addObligation(this, title, description, priority, LocalDate.now(), startTimeString, endTimeString)){
+            Obligation obligation = obligationViewModel.getObligationMutableLiveData().getValue();
+            Integer obligationId = 1;
+            if(obligation != null){
+                obligationId = obligation.getId();
+            }
+
+            if(databaseHelper.updateObligation(this, obligationId, title, description, priority, LocalDate.now(), startTimeString, endTimeString)){
                 Log.i(getResources().getString(R.string.dnevnjakTag), "success");
                 finish();
             }
@@ -236,6 +241,7 @@ public class AddObligationActivity extends AppCompatActivity {
                 if(oldObligation != null){
                     oldObligation.setEndTime(Util.timeStringToLocalTime(charSequence.toString()));
                 }
+
                 obligationViewModel.getObligationMutableLiveData().postValue(oldObligation);
             }
 

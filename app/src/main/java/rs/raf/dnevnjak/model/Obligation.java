@@ -17,7 +17,14 @@ public class Obligation implements Serializable {
 
 
     public Obligation() {
-
+        this.id = -1;
+        this.userId = -1;
+        this.title = "";
+        this.description = "";
+        this.priority = "";
+        this.date = LocalDate.now();
+        this.startTime = LocalTime.now();
+        this.endTime = LocalTime.now().plusHours(1);
     }
 
     public Obligation(Integer id, Integer userId, String title, String description, String priority, LocalDate date, LocalTime startTime, LocalTime endTime) {
@@ -93,5 +100,19 @@ public class Obligation implements Serializable {
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Obligation{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", priority='" + priority + '\'' +
+                ", date=" + date +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
     }
 }

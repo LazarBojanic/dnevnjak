@@ -44,6 +44,25 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
     }
 
     private void initListeners(){
+        buttonRegister.setOnClickListener(view -> {
+            try{
+                ServiceUser serviceUser = new ServiceUser(-1, editTextEmail.getText().toString(), editTextUsername.getText().toString(), editTextPass.getText().toString());
+
+                DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
+                if(databaseHelper.registerUser(this, serviceUser)){
+                    Log.i(getResources().getString(R.string.dnevnjakTag), "Registration Successful");
+                    Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Log.i(getResources().getString(R.string.dnevnjakTag), "Registration Failed");
+                    Toast.makeText(this, "Registration Failed", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+            catch(Exception e){
+                Log.i(getResources().getString(R.string.dnevnjakTag), e.getMessage());
+            }
+        });
         buttonLogin.setOnClickListener(view -> {
             try{
                 ServiceUser serviceUser = new ServiceUser(-1, editTextEmail.getText().toString(), editTextUsername.getText().toString(), editTextPass.getText().toString());
@@ -65,25 +84,7 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
             }
         });
 
-        buttonRegister.setOnClickListener(view -> {
-            try{
-                ServiceUser serviceUser = new ServiceUser(-1, editTextEmail.getText().toString(), editTextUsername.getText().toString(), editTextPass.getText().toString());
 
-                DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
-                if(databaseHelper.registerUser(this, serviceUser)){
-                    Log.i(getResources().getString(R.string.dnevnjakTag), "Registration Successful");
-                    Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Log.i(getResources().getString(R.string.dnevnjakTag), "Registration Failed");
-                    Toast.makeText(this, "Registration Failed", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-            catch(Exception e){
-                Log.i(getResources().getString(R.string.dnevnjakTag), e.getMessage());
-            }
-        });
         buttonExit.setOnClickListener(v -> {
             finish();
         });

@@ -13,8 +13,9 @@
 
 
     <LinearLayout
-        android:layout_width="375dp"
-        android:layout_height="701dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="6dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="6dp"
@@ -73,27 +74,27 @@
             android:selectAllOnFocus="true" />
 
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="96dp"
-            android:padding="6dp"
             android:layout_margin="6dp"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="6dp">
 
             <Button
                 android:id="@+id/buttonLogin"
-                android:layout_height="78dp"
                 android:layout_width="0dp"
+                android:layout_height="78dp"
                 android:layout_weight="1"
                 android:enabled="true"
                 android:text="@string/login" />
 
             <Button
                 android:id="@+id/buttonRegister"
-                android:layout_height="78dp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_height="78dp"
                 android:layout_marginStart="8dp"
+                android:layout_weight="1"
                 android:enabled="true"
                 android:text="@string/register" />
         </LinearLayout>
@@ -102,8 +103,8 @@
             android:id="@+id/buttonExit"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:text="@string/exit" />
 
     </LinearLayout>
