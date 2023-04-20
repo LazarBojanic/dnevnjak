@@ -40,4 +40,8 @@
     <string name="fragments">Fragments</string>
     <string name="save">Save</string>
     <string name="stateObligation">STATE_OBLIGATION</string>
+    <string name="stateObligationList">STATE_OBLIGATION_LIST</string>
+    <string name="zero">0</string>
+    <string name="extraDate">EXTRA_DATE</string>
+    <string name="extraToolbarDate">EXTRA_TOOLBAR_DATE</string>
 </resources>

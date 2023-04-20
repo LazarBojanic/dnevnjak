@@ -3,13 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="0dp"
-    android:padding="0dp"
-    tools:context=".fragment.CalendarFragment">
+    android:layout_marginTop="40dp"
+    android:layout_marginBottom="128dp"
+    android:padding="3dp"
+    tools:context=".fragment.CalendarFragment"
+    android:layout_gravity="center">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_gravity="center"
         android:id="@+id/recyclerViewCalendar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="77dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="100dp"/>
 
 </FrameLayout>

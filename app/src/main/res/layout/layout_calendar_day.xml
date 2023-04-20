@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frameLayoutCalendarDay"
+    android:layout_width="55dp"
+    android:layout_height="85dp"
+    android:layout_gravity="center"
+    android:textAlignment="center">
+    <TextView
+        android:id="@+id/textViewCalendarDay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/zero"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textColor="#00EAFF"
+        android:layout_margin="5dp"/>
+</FrameLayout>

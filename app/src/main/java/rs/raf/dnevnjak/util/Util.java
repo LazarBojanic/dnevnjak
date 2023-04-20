@@ -11,6 +11,7 @@ import java.time.LocalDate;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -78,6 +79,32 @@ public class Util {
             }
         }
     }
+    public static List<LocalDate> getNextCalendarPage(LocalDate date){
+        List<LocalDate> calendarDays = new ArrayList<>();
+        LocalDate firstDayOfMonth = date.withDayOfMonth(1);
+
+        // add days from previous month if necessary
+        int daysToAdd = firstDayOfMonth.getDayOfWeek().getValue() % 7;
+        LocalDate dateToStart = firstDayOfMonth.minusDays(daysToAdd);
+        for (int i = 0; i < daysToAdd; i++) {
+            calendarDays.add(dateToStart.plusDays(i));
+        }
+
+        // add days from current month
+        int daysInMonth = firstDayOfMonth.getMonth().length(firstDayOfMonth.isLeapYear());
+        for (int i = 0; i < daysInMonth; i++) {
+            calendarDays.add(firstDayOfMonth.plusDays(i));
+        }
+
+        // add days from next month up to next Sunday (inclusive)
+        LocalDate lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);
+        int daysToNextSunday = 7 - lastDayOfMonth.getDayOfWeek().getValue() % 7;
+        for (int i = 0; i < daysToNextSunday; i++) {
+            calendarDays.add(lastDayOfMonth.plusDays(i));
+        }
+
+        return calendarDays;
+    }
     public static List<LocalDate> generateCalendarPage(LocalDate currentDate){
         int numberOfDays = 1;
         LocalDate iterationDate = currentDate;
@@ -111,6 +138,7 @@ public class Util {
     }
 
     public static LocalDate dateStringToLocalDate(String dateString){
+
         try{
             return LocalDate.parse(dateString);
         }
@@ -119,6 +147,7 @@ public class Util {
         }
     }
     public static String localDateToString(LocalDate date){
+
         try{
             return date.format(DateTimeFormatter.ISO_LOCAL_DATE);
         }
@@ -182,10 +211,10 @@ public class Util {
         }
 
         LocalDate existingDate = Util.dateStringToLocalDate(existingDateString);
-        if(existingDate != null && date != null){
+        if(existingDate != null){
             if(existingDate.equals(date)){
                 LocalTime existingStartTime = Util.timeStringToLocalTime(existingStartTimeString);
-                LocalTime existingEndTime = Util.timeStringToLocalTime(existingStartTimeString);
+                LocalTime existingEndTime = Util.timeStringToLocalTime(existingEndTimeString);
                 LocalTime startTime = Util.timeStringToLocalTime(startTimeString);
                 LocalTime endTime = Util.timeStringToLocalTime(endTimeString);
                 if(existingStartTime != null && existingEndTime != null && startTime != null && endTime != null){
@@ -200,7 +229,7 @@ public class Util {
             }
         }
         else{
-            return false;
+            return true;
         }
     }
 

@@ -91,10 +91,10 @@ public class EditObligationActivity extends AppCompatActivity {
         initView();
         obligationViewModel = new ViewModelProvider(this).get(ObligationViewModel.class);
         getExtraObligation(savedInstanceState);
-
+        radioButtonLow.callOnClick();
         initObservers();
         initListeners();
-        radioButtonLow.callOnClick();
+
 
     }
     private void initObservers(){
@@ -128,7 +128,7 @@ public class EditObligationActivity extends AppCompatActivity {
     private void initListeners(){
         buttonSave.setOnClickListener(view -> {
             int selectedRadioButtonId = radioGroupPriority.getCheckedRadioButtonId();
-            String priority = "";
+            String priority = "low";
             switch(selectedRadioButtonId){
                 case R.id.radioButtonLow:
                     priority = "low";

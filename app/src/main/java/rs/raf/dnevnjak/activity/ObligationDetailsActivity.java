@@ -55,6 +55,10 @@ public class ObligationDetailsActivity extends AppCompatActivity {
         if(savedInstanceState == null){
             Intent intent = getIntent();
             Obligation obligation = intent.getSerializableExtra(getResources().getString(R.string.extraObligation), Obligation.class);
+            if(obligation == null){
+                String date = intent.getStringExtra(getResources().getString(R.string.extraDate));
+
+            }
             Log.i(getResources().getString(R.string.dnevnjakTag), "Regular " + obligation.toString());
             obligationViewModel.getObligationMutableLiveData().postValue(obligation);
 

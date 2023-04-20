@@ -1,10 +1,7 @@
 package rs.raf.dnevnjak.util;
 
-import static android.os.Build.VERSION_CODES.R;
-
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -15,11 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import rs.raf.dnevnjak.activity.EditObligationActivity;
 import rs.raf.dnevnjak.model.Obligation;
 import rs.raf.dnevnjak.model.ServiceUser;
 
@@ -345,7 +340,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(serviceUser != null){
             String query = "SELECT * FROM obligations WHERE user_id = ?";
             Cursor resultSet = sqLiteDatabase.rawQuery(query, new String[]{serviceUser.getId().toString()});
-            boolean dataValidated = false;
+            boolean dataValidated = true;
 
             if(resultSet.moveToFirst()){
                 do{
@@ -367,16 +362,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         contentValues.put("o_date", dateString);
                         contentValues.put("o_start_time", startTimeString);
                         contentValues.put("o_end_time", endTimeString);
-
+                        Log.i("DNEVNJAK", "priority after parameter 1!!! " + priority);
                         sqLiteDatabase.insert("obligations", null, contentValues);
                         sqLiteDatabase.close();
                         return true;
                     }
                     else{
+                        Log.i("DNEVNJAK", "error1");
                         return false;
                     }
                 }
                 else{
+                    Log.i("DNEVNJAK", "error2");
                     return false;
                 }
             }
@@ -393,31 +390,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         contentValues.put("o_date", dateString);
                         contentValues.put("o_start_time", startTimeString);
                         contentValues.put("o_end_time", endTimeString);
-
+                        Log.i("DNEVNJAK", "priority after parameter 2!!! " + priority);
                         sqLiteDatabase.insert("obligations", null, contentValues);
                         sqLiteDatabase.close();
                         return true;
                     }
                     else{
+                        Log.i("DNEVNJAK", "error3");
                         return false;
                     }
                 }
                 else{
+                    Log.i("DNEVNJAK", "error4");
                     return false;
                 }
             }
         }
         else{
+            Log.i("DNEVNJAK", "error5");
             return false;
         }
     }
-    public List<Obligation> getAllObligations(Context context){
+    public List<Obligation> getAllObligationsByDate(Context context, LocalDate dateToCheck){
         ServiceUser serviceUser = Util.getUserSharedPreference(context);
         List<Obligation> obligationList = null;
         if(serviceUser != null){
             obligationList = new ArrayList<>();
             SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-            Cursor resultSet = sqLiteDatabase.rawQuery("SELECT * FROM obligations WHERE user_id = ?", new String[]{serviceUser.getId().toString()});
+            Cursor resultSet = sqLiteDatabase.rawQuery("SELECT * FROM obligations WHERE user_id = ? AND o_date = ?", new String[]{serviceUser.getId().toString(), Util.localDateToString(dateToCheck)});
 
             if(resultSet.moveToFirst()){
                 do{
@@ -445,7 +445,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(serviceUser != null){
             String query = "SELECT * FROM obligations WHERE user_id = ? AND id != ?";
             Cursor resultSet = sqLiteDatabase.rawQuery(query, new String[]{serviceUser.getId().toString(), obligationId.toString()});
-            boolean dataValidated = false;
+            boolean dataValidated = true;
 
             if(resultSet.moveToFirst()){
                 do{

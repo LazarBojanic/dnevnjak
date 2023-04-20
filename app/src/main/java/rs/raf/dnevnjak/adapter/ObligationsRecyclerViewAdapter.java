@@ -26,20 +26,17 @@ public class ObligationsRecyclerViewAdapter extends RecyclerView.Adapter<Obligat
     private List<Obligation> obligationList;
     private LayoutInflater layoutInflater;
 
+    public void setObligationList(List<Obligation> obligationList){
+        this.obligationList = obligationList;
+    }
+
 
     public ObligationsRecyclerViewAdapter() {
 
     }
-    public ObligationsRecyclerViewAdapter(List<Obligation> obligationList) {
-        this.obligationList = obligationList;
-    }
-    public ObligationsRecyclerViewAdapter(ObligationListViewModel obligationListViewModel, Context context) {
-        this.obligationList = obligationListViewModel.getObligationListMutableLiveData(context).getValue();
-    }
-
-    public ObligationsRecyclerViewAdapter(Context context, List<Obligation> obligationList) {
+    public ObligationsRecyclerViewAdapter(Context context, ObligationListViewModel obligationListViewModel) {
+        this.obligationList = obligationListViewModel.getObligationListMutableLiveDataExisting().getValue();
         this.layoutInflater = LayoutInflater.from(context);
-        this.obligationList = obligationList;
     }
 
     @NonNull
@@ -53,7 +50,7 @@ public class ObligationsRecyclerViewAdapter extends RecyclerView.Adapter<Obligat
     @Override
     public void onBindViewHolder(@NonNull ObligationsRecyclerViewAdapter.ObligationViewHolder holder, int position) {
         holder.obligation = obligationList.get(position);
-        String timeString = Util.localTimeToString(holder.obligation.getStartTime()) + Util.localTimeToString(holder.obligation.getEndTime());
+        String timeString = Util.localTimeToString(holder.obligation.getStartTime()) + " - " + Util.localTimeToString(holder.obligation.getEndTime());
         holder.textViewTime.setText(timeString);
         holder.textViewTitle.setText(holder.obligation.getTitle());
     }
