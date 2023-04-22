@@ -2,11 +2,11 @@ plugins {
     id 'com.android.application'
 }
 android {
-    namespace 'rs.raf.dnevnjak'
+    namespace 'rs.raf.projekat1.lazar_bojanic_rn11621'
     compileSdk 33
 
     defaultConfig {
-        applicationId "rs.raf.dnevnjak"
+        applicationId "rs.raf.projekat1.lazar_bojanic_rn11621"
         minSdk 33
         targetSdk 33
         versionCode 1

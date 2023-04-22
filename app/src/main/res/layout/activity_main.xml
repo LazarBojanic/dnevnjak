@@ -36,7 +36,7 @@
             android:theme="@style/MyTextStyle" />
     </androidx.appcompat.widget.Toolbar>
 
-    <rs.raf.dnevnjak.viewpager.ViewPagerFragments
+    <rs.raf.projekat1.lazar_bojanic_rn11621.viewpager.ViewPagerFragments
         android:id="@+id/viewPagerFragments"
         android:layout_width="366dp"
         android:layout_height="721dp"
