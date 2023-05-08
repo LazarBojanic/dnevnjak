@@ -39,20 +39,20 @@
     <rs.raf.projekat1.lazar_bojanic_rn11621.viewpager.ViewPagerFragments
         android:id="@+id/viewPagerFragments"
         android:layout_width="366dp"
-        android:layout_height="721dp"
+        android:layout_height="673dp"
         android:layout_marginStart="4dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
         android:background="#00000000"
         android:backgroundTint="#00000000"
         android:contentDescription="@string/fragments"
+        android:foregroundGravity="center"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarMain"
-        android:layout_marginTop="10dp"
-        android:foregroundGravity="center"/>
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMain" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
